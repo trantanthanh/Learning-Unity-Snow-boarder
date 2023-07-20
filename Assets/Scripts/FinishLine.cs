@@ -6,6 +6,7 @@ public class FinishLine : MonoBehaviour
 {
 
     [SerializeField] float timeReloadDelay = 1.0f;
+    [SerializeField] ParticleSystem finishEffect;
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this
     /// object (2D physics only).
@@ -15,6 +16,7 @@ public class FinishLine : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            finishEffect.Play();
             Debug.Log("You're finished");
             Invoke("ReloadScene", timeReloadDelay);
         }
