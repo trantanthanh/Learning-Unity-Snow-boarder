@@ -7,6 +7,7 @@ public class FinishLine : MonoBehaviour
 
     [SerializeField] float timeReloadDelay = 1.0f;
     [SerializeField] ParticleSystem finishEffect;
+    bool hasFinished = false;
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this
     /// object (2D physics only).
@@ -14,8 +15,9 @@ public class FinishLine : MonoBehaviour
     /// <param name="other">The other Collider2D involved in this collision.</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (!hasFinished && other.tag == "Player")
         {
+            hasFinished = true;
             finishEffect.Play();
             Debug.Log("You're finished");
             GetComponent<AudioSource>().Play();
