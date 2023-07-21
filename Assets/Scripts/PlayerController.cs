@@ -9,19 +9,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float boostSpeed = 20f;
     [SerializeField] float normalSpeed = 15f;
     [SerializeField] float lowSpeed = 10f;
+    float gravityBackup = 1.0f;
+
+    public bool canMove = true;
     SurfaceEffector2D surface2D;
     // Start is called before the first frame update
     void Start()
     {
         rg2d = GetComponent<Rigidbody2D>();
+        gravityBackup = rg2d.gravityScale;
         surface2D = FindObjectOfType<SurfaceEffector2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkRotatePlayer();
-        RespondToBoost();
+        if (canMove)
+        {
+            checkRotatePlayer();
+            RespondToBoost();
+        }
     }
 
     private void RespondToBoost()
@@ -30,12 +37,14 @@ public class PlayerController : MonoBehaviour
         {
             surface2D.speed = boostSpeed;
         }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        else if (FindObjectOfType<DustTrail>().IsOnAir && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)))
         {
-            surface2D.speed = lowSpeed;
+            rg2d.gravityScale = gravityBackup * 5;
+            // surface2D.speed = lowSpeed;
         }
         else
         {
+            rg2d.gravityScale = gravityBackup;
             surface2D.speed = normalSpeed;
         }
     }

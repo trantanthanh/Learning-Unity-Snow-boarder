@@ -13,6 +13,7 @@ public class CrashDetector : MonoBehaviour
             crashEffect.Play();
             Debug.Log("Ouch !! hit my head");
             GetComponent<AudioSource>().PlayOneShot(crashSFX);
+            FindObjectOfType<PlayerController>().canMove = false;
             Invoke("ReloadScene", timeReloadDelay);
         }
     }

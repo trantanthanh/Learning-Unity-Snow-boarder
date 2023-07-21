@@ -19,6 +19,7 @@ public class FinishLine : MonoBehaviour
             finishEffect.Play();
             Debug.Log("You're finished");
             GetComponent<AudioSource>().Play();
+            FindObjectOfType<PlayerController>().canMove = false;
             Invoke("ReloadScene", timeReloadDelay);
         }
     }

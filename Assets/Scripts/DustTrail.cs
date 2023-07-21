@@ -5,12 +5,14 @@ using UnityEngine;
 public class DustTrail : MonoBehaviour
 {
     [SerializeField] ParticleSystem trailEffect;
+    public bool IsOnAir = false;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Ground")
         {
             trailEffect.Play();
+            IsOnAir = false;
         }
     }
 
@@ -19,6 +21,7 @@ public class DustTrail : MonoBehaviour
         if (other.gameObject.tag == "Ground")
         {
             trailEffect.Stop();
+            IsOnAir = true;
         }
     }
 }
